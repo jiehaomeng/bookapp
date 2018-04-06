@@ -6,7 +6,7 @@ if (empty($address)) {
     die("address left blank");
 }
 $query = "UPDATE customerinfo SET address='" . $address . "'";
-$result = mysql_query($query);
+$result = mysqli_query($sqlconnect,$query);
 if (!$result) {
     die("Update Failed!");
 } else {

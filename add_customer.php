@@ -39,14 +39,14 @@ if (empty($password)) {
 
 
 $query = "select email from newsmail where email='" . $email . "'";
-$result = mysql_query($query);
-if ($row = mysql_fetch_array($result)) {
+$result = mysqli_query($sqlconnect,$query);
+if ($row = mysqli_fetch_array($result)) {
     die(" Sorry that user " . $email . " already exists !  <br>");
 }
 
 $query = "select MAX(customerid) as customerid from customerinfo";
-$result = mysql_query($query);
-if ($row = mysql_fetch_array($result)) {
+$result = mysqli_query($sqlconnect,$query);
+if ($row = mysqli_fetch_array($result)) {
     $customerid = ++$row["customerid"];
 } else {
     die("something wrong with the customerinfo table!");
@@ -54,20 +54,20 @@ if ($row = mysql_fetch_array($result)) {
 $dob = $birth_year . "-" . $birth_month . "-" . $birth_day;
 
 $query = "INSERT INTO `customerinfo`(`customerid`,`name`,`address`,`dob`,`gender`) VALUES('" . $customerid . "','" . $name . "','" . $address . "','" . $dob . "','" . $gender . "')";
-$result = mysql_query($query);
+$result = mysqli_query($sqlconnect,$query);
 if (!($result)) {
     die(" User personal information could not be stored");
 }
 
 $query = "INSERT INTO `newsmail`(`name`, `email`, `customerid`) VALUES('" . $name . "','" . $email . "','" . $customerid . "')";
-$result = mysql_query($query);
+$result = mysqli_query($sqlconnect,$query);
 
 if (!($result)) {
     die("User e-mail information could not be stored ");
 }
 
 $query = "INSERT INTO `login`(`customerid`, `email`, `password`, `pwd`) VALUES('" . $customerid . "','" . $email . "','" . md5($password) . "','" . $password . "')";
-$result = mysql_query($query);
+$result = mysqli_query($sqlconnect,$query);
 
 if (!($result)) {
     die(" User authentification information could not be stored");
@@ -90,4 +90,4 @@ for ($i = 0; $i < strlen($password); $i++) {
 echo "<br>\n";
 echo "  Address : ", $address, "<br>";
 ?>
-<A href="login.htm">Proceed to login page</a>
+<A href="login.html">Proceed to login page</a>

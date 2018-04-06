@@ -17,19 +17,19 @@
         $catname = $catid = array();
         $childval = $category;
         $query = "select categoryid, name from category where categoryid=\"" . $childval . "\"";
-        $result = mysql_query($query);
-        if ($row = mysql_fetch_array($result)) {
+        $result = mysqli_query($sqlconnect,$query);
+        if ($row = mysqli_fetch_array($result)) {
             $catid[1] = $row["categoryid"];
             $catname[1] = $row["name"];
         }
         while (!($childval == 0)) {
             $query = "select parentcategoryid from category where categoryid=\"" . $childval . "\"";
-            $result = mysql_query($query);
-            if ($row = mysql_fetch_array($result)) {
+            $result = mysqli_query($sqlconnect,$query);
+            if ($row = mysqli_fetch_array($result)) {
                 $childval = $row["parentcategoryid"];
                 $query = "select categoryid,name from category where categoryid=\"" . $childval . "\"";
-                $result = mysql_query($query);
-                if ($row = mysql_fetch_array($result)) {
+                $result = mysqli_query($sqlconnect,$query);
+                if ($row = mysqli_fetch_array($result)) {
                     $catid[] = $row["categoryid"];
                     $catname[] = $row["name"];
                 }
@@ -69,9 +69,9 @@
                     <table width="100%" border="0"  cellspacing="1" cellpadding="3">
                         <?php
                         $query = "select categoryid,name,description from category where parentcategoryid=\"" . $category . "\"";
-                        $result = mysql_query($query);
+                        $result = mysqli_query($sqlconnect,$query);
                         if ($result) {
-                            while ($row = mysql_fetch_array($result)) {
+                            while ($row = mysqli_fetch_array($result)) {
                                 echo " <tr> ";
                                 echo "   <td  height=\"5\"> ";
                                 echo "     <p><b><a href=\"index.php?category=" . $row ["categoryid"] . "\">" . $row["name"] . "</a></b></p>";
@@ -96,9 +96,9 @@
                         </tr>
                         <?php
                         $query = "select productid,name, author, description,price from products where category=\"" . $category . "\"";
-                        $result = mysql_query($query);
+                        $result = mysqli_query($sqlconnect,$query);
                         if ($result) {
-                            while ($row = mysql_fetch_array($result)) {
+                            while ($row = mysqli_fetch_array($result)) {
                                 echo " <tr> ";
                                 echo "   <td> ";
                                 echo "     <p><b>" . $row["name"] . "</b></p>";
@@ -113,10 +113,10 @@
                                 echo "     <p>" . $row["price"] . "</p>";
                                 echo "   </td>";
                                 echo "   <td width=\"120\"> ";
-                                echo "     <A href=\"login.htm\" >Add to cart</a>";
+                                echo "     <A href=\"login.html\" >Add to cart</a>";
                                 echo "   </td>";
                                 echo "   <td width=\"120\"> ";
-                                echo "     <A href=\"login.htm\">Remove from cart</a>";
+                                echo "     <A href=\"login.html\">Remove from cart</a>";
                                 echo "   </td>";
                                 echo " </tr>";
                             }
@@ -164,7 +164,7 @@
                             </tr>
                         </table>
                     </form>
-                    <p align="center">If you don't have a username/password <a href="add_customer.htm">click 
+                    <p align="center">If you don't have a username/password <a href="add_customer.html">click 
                             here</a></p>
                 </td>
             </tr>
@@ -175,8 +175,8 @@
         <hr>
         <table align=\"center\">
             <tr>
-                <td><a href="aboutus.htm"   target="_blank">  about us </a></td>
-                <td><a href="feedback.htm"  target="_blank">  feedback </a></td>
+                <td><a href="aboutus.html"   target="_blank">  about us </a></td>
+                <td><a href="feedback.html"  target="_blank">  feedback </a></td>
             </tr>
         </table>
         <p>&nbsp;</p>

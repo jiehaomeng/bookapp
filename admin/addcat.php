@@ -4,8 +4,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     </head>
     <?php
-    require_once (dirname(__FILE__) . '/include/dbconfig.php');
-    require_once (dirname(__FILE__) . '/include/common.php');
+    require_once (dirname(__FILE__) . '/../include/dbconfig.php');
+    require_once (dirname(__FILE__) . '/../include/common.php');
     ?>
     <body bgcolor="#FFFFFF" text="#000000">
         <table width="350" border="0" align="center" cellpadding="0" cellspacing="0" height="277">
@@ -40,10 +40,10 @@
                                     <div align="center"> 
                                         <?php
                                         $query = "select name,categoryid from category";
-                                        $result = mysql_query($query);
+                                        $result = mysqli_query($sqlconnect,$query);
                                         echo "                <select name=\"parentcategory\">";
                                         echo "                 <option value=\"0\">Select Product Category</option>";
-                                        while ($row = mysql_fetch_array($result)) {
+                                        while ($row = mysqli_fetch_array($result)) {
                                             echo "                 <option value=\"" . $row["categoryid"] . "\">" . $row["name"] . " </option>";
                                         }
                                         ?>

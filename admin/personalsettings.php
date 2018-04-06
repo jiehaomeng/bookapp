@@ -13,14 +13,14 @@
                     </td>
                 </tr>
                 <?php
-                require_once (dirname(__FILE__) . '/include/dbconfig.php');
-                require_once (dirname(__FILE__) . '/include/common.php');
+                require_once (dirname(__FILE__) . '/../include/dbconfig.php');
+                require_once (dirname(__FILE__) . '/../include/common.php');
 
                 $query = "SELECT * from customerinfo where customerid='" . $customerid . "'";
 
-                $result = mysql_query($query);
+                $result = mysqli_query($sqlconnect,$query);
 
-                if ($row = mysql_fetch_array($result)) {
+                if ($row = mysqli_fetch_array($result)) {
                     echo " <tr> ";
                     echo " <td> ";
                     echo " customerid";

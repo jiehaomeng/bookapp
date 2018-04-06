@@ -33,9 +33,9 @@
         echo "  </tr>\n";
 
         $sqlquery = "SELECT * from products";
-        $queryresult = mysql_query($sqlquery);
+        $queryresult = mysqli_query($sqlquery);
 
-        while ($row = mysql_fetch_array($queryresult)) {
+        while ($row = mysqli_fetch_array($queryresult)) {
             if ($searchfor = "title") {
                 if (stristr($row["name"], $search)) {
                     echo "  <tr>\n";
@@ -50,8 +50,8 @@
 
 
                     $sqlquery2 = "SELECT name from category where categoryid='" . $row["category"] . "'";
-                    $queryresult2 = mysql_query($sqlquery2);
-                    if ($row2 = mysql_fetch_array($queryresult2)) {
+                    $queryresult2 = mysqli_query($sqlquery2);
+                    if ($row2 = mysqli_fetch_array($queryresult2)) {
                         echo "    <td><a href=\"visitor.php?category=" . $row["category"] . "\">" . $row2["name"] . "</td>\n";
                     } else {
                         echo " <td> Category missing !!</td>";
@@ -72,8 +72,8 @@
 
 
                     $sqlquery2 = "SELECT name from category where categoryid='" . $row["category"] . "'";
-                    $queryresult2 = mysql_query($sqlquery2);
-                    if ($row2 = mysql_fetch_array($queryresult2)) {
+                    $queryresult2 = mysqli_query($sqlquery2);
+                    if ($row2 = mysqli_fetch_array($queryresult2)) {
                         echo "    <td><a href=\"visitor.php?category=" . $row["category"] . "\">" . $row2["name"] . "</td>\n";
                     } else {
                         echo " <td> Category missing !!</td>";
@@ -97,8 +97,8 @@
 
 
                     $sqlquery2 = "SELECT name from category where categoryid='" . $row["category"] . "'";
-                    $queryresult2 = mysql_query($sqlquery2);
-                    if ($row2 = mysql_fetch_array($queryresult2)) {
+                    $queryresult2 = mysqli_query($sqlquery2);
+                    if ($row2 = mysqli_fetch_array($queryresult2)) {
                         echo "    <td><a href=\"visitor.php?category=" . $row["category"] . "\">" . $row2["name"] . "</td>\n";
                     } else {
                         echo " <td> Category missing !!</td>";

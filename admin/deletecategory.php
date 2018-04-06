@@ -4,8 +4,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     </head>
     <?php
-    require_once (dirname(__FILE__) . '/include/dbconfig.php');
-    require_once (dirname(__FILE__) . '/include/common.php');
+    require_once (dirname(__FILE__) . '/../include/dbconfig.php');
+    require_once (dirname(__FILE__) . '/../include/common.php');
     ?>
     <body bgcolor="#FFFFFF" text="#000000">
         <?php
@@ -22,9 +22,9 @@
 
         $query = "select parentcategoryid from category where categoryid ='" . $categoryid . "'";
 
-        $result = mysql_query($query);
+        $result = mysqli_query($sqlconnect,$query);
         {
-            if ($row = mysql_fetch_array($result)) {
+            if ($row = mysqli_fetch_array($result)) {
                 $parentcategoryid = $row["parentcategoryid"];
             } else {
                 die("Parent Not Found!!!");
@@ -33,10 +33,10 @@
 
         $query = "select * from category where parentcategoryid ='" . $categoryid . "'";
 
-        $result = mysql_query($query);
-        while ($row = mysql_fetch_row($result)) {
+        $result = mysqli_query($sqlconnect,$query);
+        while ($row = mysqli_fetch_row($result)) {
             $query2 = "Update category SET parentcategoryid='" . $parentcategoryid . "' where parentcategoryid='" . $categoryid . "'";
-            $result2 = mysql_query($query2);
+            $result2 = mysqli_query($query2);
             if (!$result2) {
                 die("Tree shift failed !! <br>");
             } else {
@@ -46,7 +46,7 @@
 
 
         $query = "delete from category where categoryid ='" . $categoryid . "'";
-        $result = mysql_query($query);
+        $result = mysqli_query($sqlconnect,$query);
         if ($result) {
             echo "category record deleted from categorys table.<br>\n";
         } else {
@@ -55,7 +55,7 @@
         ?>
         <br><br>
 
-        To return to Admin page <A href="index.htm"> Click here! </a>
+        To return to Admin page <A href="index.html"> Click here! </a>
         <br><br>
 
     </body>

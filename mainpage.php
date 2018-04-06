@@ -19,20 +19,20 @@
         $childval = $category;
         //$catline[]=" ";
         $query = "select categoryid, name from category where categoryid=\"" . $childval . "\"";
-        $result = mysql_query($query);
-        if ($row = mysql_fetch_array($result)) {
+        $result = mysqli_query($sqlconnect,$query);
+        if ($row = mysqli_fetch_array($result)) {
             $catid[1] = $row["categoryid"];
             $catname[1] = $row["name"];
         }
 
         while (!($childval == 0)) {
             $query = "select parentcategoryid from category where categoryid=\"" . $childval . "\"";
-            $result = mysql_query($query);
-            if ($row = mysql_fetch_array($result)) {
+            $result = mysqli_query($sqlconnect,$query);
+            if ($row = mysqli_fetch_array($result)) {
                 $childval = $row["parentcategoryid"];
                 $query = "select categoryid,name from category where categoryid=\"" . $childval . "\"";
-                $result = mysql_query($query);
-                if ($row = mysql_fetch_array($result)) {
+                $result = mysqli_query($sqlconnect,$query);
+                if ($row = mysqli_fetch_array($result)) {
                     $catid[] = $row["categoryid"];
                     $catname[] = $row["name"];
                 }
@@ -66,7 +66,7 @@
                         </div>
                     </form>
                 </td>
-                <td><a href="asdvancesearch.htm">Advance</a></td>
+                <td><a href="asdvancesearch.html">Advance</a></td>
             </tr>
         </table>
         <hr>
@@ -77,9 +77,9 @@
                     <table width="100%" border="0"  cellspacing="1" cellpadding="3">
                         <?php
                         $query = "select categoryid,name,description from category where parentcategoryid=\"" . $category . "\"";
-                        $result = mysql_query($query);
+                        $result = mysqli_query($sqlconnect,$query);
                         if ($result) {
-                            while ($row = mysql_fetch_array($result)) {
+                            while ($row = mysqli_fetch_array($result)) {
                                 echo " <tr> ";
                                 echo "   <td  height=\"5\"> ";
                                 echo "     <p><b><a href=\"mainpage.php?category=" . $row["categoryid"] . "&customerid=" . $customerid . "\">" . $row["name"] . "</a></b></p>";
@@ -105,9 +105,9 @@
 
                         <?php
                         $query = "select productid,name, author, description,price from products where category=\"" . $category . "\"";
-                        $result = mysql_query($query);
+                        $result = mysqli_query($sqlconnect,$query);
                         if ($result) {
-                            while ($row = mysql_fetch_array($result)) {
+                            while ($row = mysqli_fetch_array($result)) {
                                 echo " <tr> ";
                                 echo "   <td> ";
                                 echo "     <p><b>" . $row["name"] . "</b></p>";
@@ -145,15 +145,15 @@
                     echo "      <p><a href=\"personalsettings.php?customerid=" . $customerid . "&category=" . $category . "\">Personal Settings</a></p> ";
                     echo "      <p><a href=\"viewshoppingcart.php?customerid=" . $customerid . "&category=" . $category . "\">View Shopping Cart</a></p>";
                     ?>      
-                    <p><a href="login.htm">Log Out</a></p>
+                    <p><a href="login.html">Log Out</a></p>
                 </td>
             </tr>
         </table>
         <hr>
         <table align = \"center\">
             <tr>
-                <td><a href = "aboutus.htm" target = "_blank"> aboutus </a></td>
-                <td><a href = "feedback.htm" target = "_blank"> feedback </a></td>
+                <td><a href = "aboutus.html" target = "_blank"> aboutus </a></td>
+                <td><a href = "feedback.html" target = "_blank"> feedback </a></td>
             </tr>
         </table>
         <p>&nbsp;</p>

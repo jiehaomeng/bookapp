@@ -39,13 +39,13 @@
                             $carttotal = 0;
                             if (isset($remove) && !empty($remove)) {
                                 $query = "select productid from neworder where customerid='" . $customerid . "'";
-                                $result = mysql_query($query);
-                                while ($row = mysql_fetch_array($result)) {
+                                $result = mysqli_query($sqlconnect,$query);
+                                while ($row = mysqli_fetch_array($result)) {
                                     //--check for any changes to the cart.
                                     if (isset($remove[$row["productid"]])) {
                                         if ($remove[$row["productid"]] == 1) {
                                             $deletequery = "delete from neworder where productid=" . $row["productid"];
-                                            $deleteresult = mysql_query($deletequery);
+                                            $deleteresult = mysqli_query($deletequery);
                                         }
                                     }
                                 }
@@ -53,11 +53,11 @@
                             //--display detailed product listing for all products in the shopping cart.
 
                             $query = "select productid from neworder where customerid='" . $customerid . "'";
-                            $result = mysql_query($query);
-                            while ($row = mysql_fetch_array($result)) {
+                            $result = mysqli_query($sqlconnect,$query);
+                            while ($row = mysqli_fetch_array($result)) {
                                 $proquery = "select productid,name,author,price,description from products where productid='" . $row["productid"] . "'";
-                                $proresult = mysql_query($proquery);
-                                if ($pro = mysql_fetch_array($proresult)) {
+                                $proresult = mysqli_query($proquery);
+                                if ($pro = mysqli_fetch_array($proresult)) {
                                     echo " <tr> ";
                                     echo "    <td> ";
                                     echo "     <center>" . ++$serialcount . "</center>";
@@ -105,7 +105,7 @@
 
                 </td>
                 <td width="15%" height="229"> 
-                    <p><a href="login.htm">log out</a></p>
+                    <p><a href="login.html">log out</a></p>
                     <p>&nbsp;</p>
                     <p>&nbsp;</p>
                     <p>&nbsp;</p>

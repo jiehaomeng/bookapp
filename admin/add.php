@@ -1,6 +1,6 @@
 <?php
-require_once (dirname(__FILE__) . '/include/dbconfig.php');
-require_once (dirname(__FILE__) . '/include/common.php');
+require_once (dirname(__FILE__) . '/../include/dbconfig.php');
+require_once (dirname(__FILE__) . '/../include/common.php');
 
 if ($type == "category") {
     echo"<table align=\"center\" border=1>";
@@ -9,10 +9,10 @@ if ($type == "category") {
     echo"<tr><td>Description </td><td>" . $catdescription . "</td></tr>";
     echo"</table><br><br>";
     $query = "select categoryid from category where categoryid='" . $parentcategory . "'";
-    $result = mysql_query($query);
-    if ($row = mysql_fetch_array($result)) {
+    $result = mysqli_query($sqlconnect,$query);
+    if ($row = mysqli_fetch_array($result)) {
         $query2 = "INSERT into category VALUES(null,'" . $parentcategory . "','" . $catname . "','" . $catdescription . "')";
-        $result2 = mysql_query($query2);
+        $result2 = mysqli_query($query2);
 //    echo "Category added as <b>".$query."</b>\n";
     } else {
         echo "Parentcategory Does Not EXIST !!!";
@@ -26,11 +26,11 @@ if ($type == "category") {
     echo"<tr><td>Price </td><td>" . $proprice . "</td></tr>";
     echo"</table><br><br>";
     $query = "INSERT into `products`(`productid`, `name`, `author`, `description`, `price`, `category`) VALUES(null,'" . $proname . "','" . $proauthor . "','" . $prodescription . "','" . $proprice . "','" . $parentcategory . "')";
-    $result = mysql_query($query);
+    $result = mysqli_query($sqlconnect,$query);
 //echo "Product added as<b> ".$query."</b>\n";
 } else {
     echo "type should be product/catgory. But it was " . $type . " !!!";
 }
 ?>
 <br>
-To return to the Admin page <A href="index.htm">click here</a>
+To return to the Admin page <A href="index.html">click here</a>

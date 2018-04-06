@@ -22,8 +22,8 @@
                                 <td>   
                                     <?php
                                     $query = "select productid from neworder where customerid='" . $customerid . "'";
-                                    $result = mysql_query($query);
-                                    if (!($row = mysql_fetch_array($result))) {
+                                    $result = mysqli_query($sqlconnect,$query);
+                                    if (!($row = mysqli_fetch_array($result))) {
                                         die("your shopping cart is empty!");
                                     }
                                     if (!isset($total)) {
@@ -33,28 +33,28 @@
                                         die("Shopping cart amount is zero !");
                                     }
                                     $query = "select MAX(orderid) as orderid from orders";
-                                    $result = mysql_query($query);
-                                    if ($row = mysql_fetch_array($result)) {
+                                    $result = mysqli_query($sqlconnect,$query);
+                                    if ($row = mysqli_fetch_array($result)) {
                                         $neworderid = ++$row["orderid"];
                                     }
                                     $dt = getdate();
                                     $dateformat = $dt["year"] . "-" . $dt["mon"] . "-" . $dt["mday"];
                                     $query = "INSERT into orders VALUES('" . $neworderid . "','" . $customerid . "','" . $dateformat . "','" . $total . "','Pending')";
-                                    $result = mysql_query($query);
+                                    $result = mysqli_query($sqlconnect,$query);
                                     if (!($result)) {
                                         die("Order entry failed!");
                                     }
                                     $query = "select productid from neworder where customerid='" . $customerid . "'";
-                                    $result = mysql_query($query);
-                                    while ($row = mysql_fetch_array($result)) {
+                                    $result = mysqli_query($sqlconnect,$query);
+                                    while ($row = mysqli_fetch_array($result)) {
                                         $query2 = "INSERT into products_ordered VALUES('','" . $row["productid"] . "','" . $neworderid . "')";
-                                        $result2 = mysql_query($query2);
+                                        $result2 = mysqli_query($query2);
                                         if (!($result2)) {
                                             die("Products entry for this order failed!");
                                         }
                                     }
                                     $query = "delete from neworder where customerid='" . $customerid . "'";
-                                    $result = mysql_query($query);
+                                    $result = mysqli_query($sqlconnect,$query);
                                     if (!($result)) {
                                         die("Shopping cart could not be trashed!");
                                     } else {

@@ -3,15 +3,15 @@
         <title>Pending order browser</title>
     </head>
     <?php
-    require_once (dirname(__FILE__) . '/include/dbconfig.php');
-    require_once (dirname(__FILE__) . '/include/common.php');
+    require_once (dirname(__FILE__) . '/../include/dbconfig.php');
+    require_once (dirname(__FILE__) . '/../include/common.php');
     ?>
     <body bgcolor="#FFFFFF" text="#000000">
 
         <?php
         $sqlquery = "SELECT * from orders";
 
-        $queryresult = mysql_query($sqlquery);
+        $queryresult = mysqli_query($sqlconnect,$sqlquery);
 
         echo "<table width=700 border=1 align=center>";
         echo " <tr>";
@@ -22,7 +22,7 @@
         echo "  <td width=100> <center><b>Status</b></center></td>\n";
 
         echo "  </tr>\n";
-        while ($row = mysql_fetch_array($queryresult)) {
+        while ($row = mysqli_fetch_array($queryresult)) {
             if ($row["status"] == "Pending") {
                 echo "  <tr>\n";
                 echo "    <td><center>" . $row["orderid"] . "</center></td>\n";

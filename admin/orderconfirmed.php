@@ -36,16 +36,16 @@ $hostname="";
 $dbusername="root";
 $dbpassword="";
 
-$connect=mysql_connect($hostname,$dbusername,$dbpassword);
-$dbselect=mysql_select_db($database);
+$connect=mysqli_connect($hostname,$dbusername,$dbpassword);
+$dbselect=mysqli_select_db($database);
 
 
 
 $serialcount=0;
 
 $query="select productid from neworder where customerid='".$customerid."'";
-$result=mysql_query($query);
-while($row=mysql_fetch_array($result))
+$result=mysqli_query($sqlconnect,$query);
+while($row=mysqli_fetch_array($result))
 {
 //--check for any changes to the cart.
   if (isset($$row["productid"]))
@@ -53,7 +53,7 @@ while($row=mysql_fetch_array($result))
    if ($$row["productid"]==1)
    {
     $deletequery="delete from neworder where productid=".$row["productid"];
-    $deleteresult= mysql_query($deletequery);
+    $deleteresult= mysqli_query($deletequery);
    }
   }
 }
@@ -62,13 +62,13 @@ while($row=mysql_fetch_array($result))
 //--display detailed product listing for all products in the shopping cart.
 
 $query="select productid from neworder where customerid='".$customerid."'";
-$result=mysql_query($query);
-while($row=mysql_fetch_array($result))
+$result=mysqli_query($sqlconnect,$query);
+while($row=mysqli_fetch_array($result))
 {
 
   $proquery="select productid,name,author,price,description from products where productid='".$row["productid"]."'";
-  $proresult=mysql_query($proquery);
-  if($pro=mysql_fetch_array($proresult))  
+  $proresult=mysqli_query($proquery);
+  if($pro=mysqli_fetch_array($proresult))  
    {
     
     echo " <tr> ";
@@ -116,7 +116,7 @@ echo "  </tr>";
       
     </td>
     <td width="15%" height="229"> 
-          <p><a href="login.htm">log out</a></p>
+          <p><a href="login.html">log out</a></p>
       <p>&nbsp;</p>
       <p>&nbsp;</p>
       <p>&nbsp;</p>

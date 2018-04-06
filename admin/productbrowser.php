@@ -3,15 +3,15 @@
         <title>maildata record browser</title>
     </head>
     <?php
-    require_once (dirname(__FILE__) . '/include/dbconfig.php');
-    require_once (dirname(__FILE__) . '/include/common.php');
+    require_once (dirname(__FILE__) . '/../include/dbconfig.php');
+    require_once (dirname(__FILE__) . '/../include/common.php');
     ?>
     <body bgcolor="#FFFFFF" text="#000000">
 
         <?php
         $sqlquery = "SELECT * from products";
 
-        $queryresult = mysql_query($sqlquery);
+        $queryresult = mysqli_query($sqlconnect,$sqlquery);
 
         echo "<table width=700 border=1 align=center>";
         echo " <tr>";
@@ -24,7 +24,7 @@
         echo "  <td width=100> <center><b>Action</b></center></td>\n";
 
         echo "  </tr>\n";
-        while ($row = mysql_fetch_array($queryresult)) {
+        while ($row = mysqli_fetch_array($queryresult)) {
             echo "  <tr>\n";
             echo "    <td>" . $row["productid"] . "</td>\n";
             echo "    <td>" . $row["name"] . "</td>\n";
@@ -32,8 +32,8 @@
             echo "    <td>" . $row["description"] . "</td>\n";
             echo "    <td>" . $row["price"] . "</td>\n";
             $sqlquery2 = "SELECT name from category where categoryid='" . $row["category"] . "'";
-            $queryresult2 = mysql_query($sqlquery2);
-            if ($row2 = mysql_fetch_array($queryresult2)) {
+            $queryresult2 = mysqli_query($sqlconnect,$sqlquery2);;
+            if ($row2 = mysqli_fetch_array($queryresult2)) {
                 echo "    <td><A href=\"catprobrowser.php?categoryid=" . $row["category"] . "\">" . $row2["name"] . "</a></td>\n";
             }
 

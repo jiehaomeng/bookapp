@@ -21,8 +21,8 @@ class session {
         // get session-lifetime
         $this->lifeTime = get_cfg_var("session.gc_maxlifetime");
         // open database-connection
-        $dbHandle = @mysql_connect("server", "user", "password");
-        $dbSel = @mysql_select_db("database", $dbHandle);
+        $dbHandle = @mysqli_connect("server", "user", "password");
+        $dbSel = @mysqli_select_db("database", $dbHandle);
         // return success
         if (!$dbHandle || !$dbSel)
             return false;
@@ -33,16 +33,16 @@ class session {
     function close() {
         $this->gc(ini_get('session.gc_maxlifetime'));
         // close database-connection
-        return @mysql_close($this->dbHandle);
+        return @mysqli_close($this->dbHandle);
     }
 
     function read($sessID) {
         // fetch session-data
-        $res = mysql_query("SELECT session_data AS data FROM test_sessions
+        $res = mysqli_query("SELECT session_data AS data FROM test_sessions
                             WHERE session_id = '$sessID'
                             AND session_expires > " . time(), $this->dbHandle);
         // return data or an empty string at failure
-        if ($row = mysql_fetch_assoc($res))
+        if ($row = mysqli_fetch_assoc($res))
             return $row['data'];
         return "";
     }
@@ -51,23 +51,23 @@ class session {
         // new session-expire-time
         $newExp = time() + $this->lifeTime;
         // is a session with this id in the database?
-        $res = mysql_query("SELECT * FROM test_sessions
+        $res = mysqli_query("SELECT * FROM test_sessions
                             WHERE session_id = '$sessID'", $this->dbHandle);
         // if yes,
-        if (mysql_num_rows($res)) {
+        if (mysqli_num_rows($res)) {
             // ...update session-data
-            mysql_query("UPDATE test_sessions
+            mysqli_query("UPDATE test_sessions
                          SET session_expires = '$newExp',
                          session_data = '$sessData'
                          WHERE session_id = '$sessID'", $this->dbHandle);
             // if something happened, return true
-            if (mysql_affected_rows($this->dbHandle))
+            if (mysqli_affected_rows($this->dbHandle))
                 return true;
         }
         // if no session-data was found,
         else {
             // create a new row
-            mysql_query("INSERT INTO test_sessions (
+            mysqli_query("INSERT INTO test_sessions (
                          session_id,
                          session_expires,
                          session_data)
@@ -76,7 +76,7 @@ class session {
                          '$newExp',
                          '$sessData')", $this->dbHandle);
             // if row was created, return true
-            if (mysql_affected_rows($this->dbHandle))
+            if (mysqli_affected_rows($this->dbHandle))
                 return true;
         }
         // an unknown error occured
@@ -85,9 +85,9 @@ class session {
 
     function destroy($sessID) {
         // delete session-data
-        mysql_query("DELETE FROM test_sessions WHERE session_id = '$sessID'", $this->dbHandle);
+        mysqli_query("DELETE FROM test_sessions WHERE session_id = '$sessID'", $this->dbHandle);
         // if session was deleted, return true,
-        if (mysql_affected_rows($this->dbHandle))
+        if (mysqli_affected_rows($this->dbHandle))
             return true;
         // ...else return false
         return false;
@@ -95,9 +95,9 @@ class session {
 
     function gc($sessMaxLifeTime) {
         // delete old sessions
-        mysql_query("DELETE FROM test_sessions WHERE session_expires < " . time(), $this->dbHandle);
+        mysqli_query("DELETE FROM test_sessions WHERE session_expires < " . time(), $this->dbHandle);
         // return affected rows
-        return mysql_affected_rows($this->dbHandle);
+        return mysqli_affected_rows($this->dbHandle);
     }
 
 }

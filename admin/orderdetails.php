@@ -4,8 +4,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     </head>
     <?php
-    require_once (dirname(__FILE__) . '/include/dbconfig.php');
-    require_once (dirname(__FILE__) . '/include/common.php');
+    require_once (dirname(__FILE__) . '/../include/dbconfig.php');
+    require_once (dirname(__FILE__) . '/../include/common.php');
     ?>
     <body bgcolor="#FFFFFF" text="#000000">
         <p>&nbsp;</p>
@@ -14,8 +14,8 @@
 
             <?php
             $query = "select * from orders where orderid='" . $orderid . "'";
-            $result = mysql_query($query);
-            if ($row = mysql_fetch_array($result)) {
+            $result = mysqli_query($sqlconnect,$query);
+            if ($row = mysqli_fetch_array($result)) {
                 echo "<tr bgcolor=\"#dddddd\">";
                 echo "<td><b>ORDER ID  :</b> " . $orderid . " </td>";
                 echo "<td width=500><center><h1> INVOICE</h1></center> </td>";
@@ -50,12 +50,12 @@
 $serialcount = 0;
 $carttotal = 0;
 $query = "select productid from products_ordered where orderid='" . $orderid . "'";
-$result = mysql_query($query);
-while ($row = mysql_fetch_array($result)) {
+$result = mysqli_query($sqlconnect,$query);
+while ($row = mysqli_fetch_array($result)) {
 
     $proquery = "select productid,name,author,price,description from products where productid='" . $row["productid"] . "'";
-    $proresult = mysql_query($proquery);
-    if ($pro = mysql_fetch_array($proresult)) {
+    $proresult = mysqli_query($proquery);
+    if ($pro = mysqli_fetch_array($proresult)) {
 
         echo " <tr> ";
         echo "    <td > ";
@@ -101,6 +101,6 @@ echo "  </tr>";
 </table>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-To return to Admin page <A href="index.htm"> click here</a>
+To return to Admin page <A href="index.html"> click here</a>
 </body>
 </html>
